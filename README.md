@@ -3,13 +3,14 @@
 ![](https://img.shields.io/badge/Swift-5.3-orange.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/lukereichold/VisualActionKit/blob/master/LICENSE) 
 [![SPM compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
-    
+[![Twitter](https://img.shields.io/badge/twitter-@lreichold-blue.svg?style=flat)](https://twitter.com/lreichold)
+
 Human action classification for video, offline and natively on iOS via Core ML
 
 
 ## Installation
 
-Ink is distributed using the [Swift Package Manager](https://swift.org/package-manager). To install it into a project, simply add it as a dependency within your `Package.swift` manifest:
+To install via [Swift Package Manager](https://swift.org/package-manager), add `VisualActionKit` to your `Package.swift` file. Alternatively, add it from Xcode directly.
 
 ```swift
 let package = Package(
@@ -21,7 +22,7 @@ let package = Package(
 )
 ```
 
-Then import VisualActionKit wherever you’d like to use it:
+Then import `VisualActionKit` wherever you’d like to use it:
 
 ```swift
 import VisualActionKit
