@@ -18,8 +18,6 @@ public class Classifier {
         
         let reader = try! AVAssetReader(asset: asset)
         let videoTrack = asset.tracks(withMediaType: .video)[0]
-
-        debugPrint("Frame rate: ", videoTrack.nominalFrameRate)
             
         let trackReaderOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings:[String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)])
 
@@ -30,7 +28,6 @@ public class Classifier {
         
         var currentFrame = 0
         while let sampleBuffer = trackReaderOutput.copyNextSampleBuffer() {
-//            print("sample at time \(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))")
             if let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {
                 
                 CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: 0))
@@ -45,24 +42,11 @@ public class Classifier {
                 let newWidth = Int(scale * Double(width))
                 let newHeight = Int(scale * Double(height))
                 
-//                debugPrint(newWidth)
-//                debugPrint(newHeight)
-                
-//                let start = CFAbsoluteTimeGetCurrent()
-            
                 /// Aspect ratio is preserved since both width and height dimensions are scaled down by same factor.
                 /// Now, either `newHeight` or `newWidth` will be 256.
                 guard let resizedBuffer = resizePixelBuffer(imageBuffer, width: newWidth, height: newHeight) else {
                     continue
                 }
-                
-                // run your work
-//                let diff = CFAbsoluteTimeGetCurrent() - start
-//                print("Took \(diff) seconds")
-                
-                // cool, this works, just for testing:
-                assert(CVPixelBufferGetWidth(resizedBuffer) == newWidth)
-                assert(CVPixelBufferGetHeight(resizedBuffer) == newHeight)
                 
                 CVPixelBufferLockBaseAddress(resizedBuffer, CVPixelBufferLockFlags(rawValue: 0))
                 let bytesPerRow = CVPixelBufferGetBytesPerRow(resizedBuffer)
@@ -82,15 +66,12 @@ public class Classifier {
                         let b = buffer[index]
                         let g = buffer[index+1]
                         let r = buffer[index+2]
-//                        print(r,g,b)
                         
-                        let red = Float32(2 * (Double(r) / 255.0) - 1)
-                        let green = Float32(2 * (Double(g) / 255.0) - 1)
-                        let blue = Float32(2 * (Double(b) / 255.0) - 1)
-                        
-                        multi[0, currentFrame, x, y, 0] = red
-                        multi[0, currentFrame, x, y, 1] = green
-                        multi[0, currentFrame, x, y, 2] = blue
+                        let color = NormalizedColor(r, g, b)
+
+                        multi[0, currentFrame, x, y, 0] = color.red
+                        multi[0, currentFrame, x, y, 1] = color.green
+                        multi[0, currentFrame, x, y, 2] = color.blue
                     }
                 }
                 
@@ -125,5 +106,18 @@ extension AVAsset {
             frameCount += 1
         }
         return frameCount
+    }
+}
+
+
+struct NormalizedColor {
+    let red: Float32
+    let green: Float32
+    let blue: Float32
+    
+    init(_ r: UInt8, _ g: UInt8, _ b: UInt8) {
+        red = Float32(2 * (Double(r) / 255.0) - 1)
+        green = Float32(2 * (Double(g) / 255.0) - 1)
+        blue = Float32(2 * (Double(b) / 255.0) - 1)
     }
 }
