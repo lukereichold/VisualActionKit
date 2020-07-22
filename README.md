@@ -7,6 +7,7 @@
 
 Human action classification for video, offline and natively on iOS via Core ML
 
+⚠️ _This project requires Xcode 12._
 
 ## Installation
 
