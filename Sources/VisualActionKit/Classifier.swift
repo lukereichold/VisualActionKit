@@ -1,25 +1,26 @@
-import UIKit
+import Foundation
 import AVKit
 import CoreML
 
-class ViewController: UIViewController {
-
+public class Classifier {
+    static let shared = Classifier()
     let frameSize = 224
-    var model: Kinetics1!
+    let model: Kinetics
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private init() {
+        let modelUrl = Bundle.module.url(forResource: "Kinetics", withExtension: "mlmodel")!
+        let compiledModelURL = try! MLModel.compileModel(at: modelUrl)
+        let mlModel = try! MLModel(contentsOf: compiledModelURL)
+        model = Kinetics(model: mlModel)
+    }
+    
+    public func classify(_ asset: AVAsset) {
         
-        model = Kinetics1()
-        
-        let url = Bundle.main.url(forResource: "stretching_arm", withExtension: "mp4")!
-        let asset = AVAsset(url: url)
-
         let reader = try! AVAssetReader(asset: asset)
         let videoTrack = asset.tracks(withMediaType: .video)[0]
 
         debugPrint("Frame rate: ", videoTrack.nominalFrameRate)
-        
+            
         let trackReaderOutput = AVAssetReaderTrackOutput(track: videoTrack, outputSettings:[String(kCVPixelBufferPixelFormatTypeKey): NSNumber(value: kCVPixelFormatType_32BGRA)])
 
         reader.add(trackReaderOutput)
@@ -99,7 +100,7 @@ class ViewController: UIViewController {
             currentFrame += 1
         }
         
-        let input = Kinetics1Input(Placeholder: multi.array)
+        let input = KineticsInput(Placeholder: multi.array)
         if let output = try? model.prediction(input: input) {
             debugPrint(top(5, output.Softmax))
             debugPrint(output.classLabel)
