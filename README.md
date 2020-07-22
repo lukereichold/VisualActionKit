@@ -9,6 +9,8 @@ Human action classification for video, offline and natively on iOS via Core ML
 
 ⚠️ _This project requires Xcode 12._
 
+**[ See accompanying blog post ]**
+
 ## Installation
 
 To install via [Swift Package Manager](https://swift.org/package-manager), add `VisualActionKit` to your `Package.swift` file. Alternatively, add it from Xcode directly.
@@ -28,9 +30,6 @@ Then import `VisualActionKit` wherever you’d like to use it:
 ```swift
 import VisualActionKit
 ```
-
-[ See accompanying blog post ]
-
 
 ## Usage
 
