@@ -25,7 +25,7 @@ public extension Classifier {
         case resizingFailure
     }
     
-    func classify(_ asset: AVAsset) throws -> Predictions {
+    func classify(_ asset: AVAsset, then completion: (Predictions) -> Void) throws {
         
         let reader = try AVAssetReader(asset: asset)
         let videoTrack = asset.tracks(withMediaType: .video)[0]
@@ -53,7 +53,7 @@ public extension Classifier {
             currentFrame += 1
         }
         
-        return try performInference(for: multi)
+        completion(try performInference(for: multi))
     }
 }
 
