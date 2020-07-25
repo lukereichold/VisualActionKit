@@ -8,10 +8,16 @@ final class VisualActionKitTests: XCTestCase {
         let url = Bundle.module.url(forResource: "writing", withExtension: "mp4")!
         let asset = AVAsset(url: url)
         
+        let expectation = self.expectation(description: "Writing Clip")
+        var actualPredictions: Classifier.Predictions?
+        
         try! Classifier.shared.classify(asset) { predictions in
-            debugPrint(predictions)
+            actualPredictions = predictions
+            expectation.fulfill()
         }
         
+        waitForExpectations(timeout: 60, handler: nil)
+        XCTAssertEqual(actualPredictions?.first?.classLabel, "writing")
     }
     
     func testNormalizedColor() {
