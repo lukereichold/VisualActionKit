@@ -40,7 +40,7 @@ public extension Classifier {
         reader.add(trackReaderOutput)
         reader.startReading()
         
-        /// 5D tensor containing RGB data for each pixel in each sequntial frame of the video.
+        /// 5D tensor containing RGB data for each pixel in each sequential frame of the video.
         var multi = MultiArray<Float32>(shape: [1, frameCount, frameSize, frameSize, 3])
         
         var currentFrame = 0
