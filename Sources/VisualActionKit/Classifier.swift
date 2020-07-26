@@ -3,7 +3,7 @@ import AVKit
 import CoreML
 
 public class Classifier {
-    static let shared = Classifier()
+    public static let shared = Classifier()
     let frameSize = 224
     let model: Kinetics
     
