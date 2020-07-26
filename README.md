@@ -7,9 +7,11 @@
 
 Human action classification for video, offline and natively on iOS via Core ML
 
+Uses the [`kinetics-i3d`]() model to classify videos into one of 400 different action classes defined in [Kinetics 400](https://deepmind.com/research/open-source/kinetics)
+
 ⚠️ _This project requires Xcode 12._
 
-**[ See accompanying blog post ]**
+**Reference**: [See accompanying blog post](https://lukereichold.com/blog/posts/video-action-classification-coreml/)
 
 ## Installation
 
