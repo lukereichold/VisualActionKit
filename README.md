@@ -39,7 +39,9 @@ import VisualActionKit
 let url = Bundle.module.url(forResource: "writing", withExtension: "mp4")
 let asset = AVAsset(url: url)
 
-let classification = Classifier.shared.classify(asset)
+try Classifier.shared.classify(asset) { predictions in
+    print(predictions)
+}
 ```
 
 ## Contribute
