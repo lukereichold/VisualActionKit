@@ -13,6 +13,8 @@ Uses the [`kinetics-i3d`]() model to classify videos into one of 400 different a
 
 **Reference**: [See accompanying blog post](https://lukereichold.com/blog/posts/video-action-classification-coreml/)
 
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/11Cr8w_T53bPLHPvLfZteAxHhtjgBS-LH)
+
 ## Installation
 
 To install via [Swift Package Manager](https://swift.org/package-manager), add `VisualActionKit` to your `Package.swift` file. Alternatively, add it from Xcode directly.
