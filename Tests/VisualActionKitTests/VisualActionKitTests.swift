@@ -4,11 +4,23 @@ import AVKit
 
 final class VisualActionKitTests: XCTestCase {
     
-    func testClassifyDemoClip() {
-        let url = Bundle.module.url(forResource: "writing", withExtension: "mp4")!
-        let asset = AVAsset(url: url)
+    enum TestClip: String {
+        case writing
+        case cricketShot
+        case makingTea = "making tea"
+        case readingBook = "reading book"
+        case stretchingArm = "stretching arm"
+        case rockPaperScissors = "rock scissors paper"
         
-        let expectation = self.expectation(description: "Writing Clip")
+        var path: URL {
+            Bundle.module.url(forResource: rawValue, withExtension: "mp4")!
+        }
+    }
+    
+    func testClassifyDemoClip() {
+        let asset = AVAsset(url: TestClip.cricketShot.path)
+        
+        let expectation = self.expectation(description: TestClip.cricketShot.rawValue)
         var actualPredictions: Classifier.Predictions?
         
         try! Classifier.shared.classify(asset) { predictions in
@@ -17,7 +29,7 @@ final class VisualActionKitTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 60, handler: nil)
-        XCTAssertEqual(actualPredictions?.first?.classLabel, "writing")
+        XCTAssertEqual(actualPredictions?.first?.classLabel, "playing cricket")
     }
     
     func testNormalizedColor() {
