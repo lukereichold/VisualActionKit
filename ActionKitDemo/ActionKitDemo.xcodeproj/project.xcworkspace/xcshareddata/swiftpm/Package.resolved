@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "VisualActionKit",
+        "repositoryURL": "https://github.com/lukereichold/VisualActionKit.git",
+        "state": {
+          "branch": null,
+          "revision": "df505507c32b16d39c18584fad482eebe6e7b3f5",
+          "version": "0.1.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
